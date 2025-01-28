@@ -7,14 +7,14 @@ from django.http import HttpResponse
 from .forms import PDBInputForm
 from datetime import datetime
 
+from sadic import sadic
+
+RANGE_RISOLUZIONE = (0.1, 3.0)
+RANGE_PROBE_RADIUS = (1.0, 100.0)
+
 def process_pdb(input, output_path, risoluzione=None, probe_radius=None):
-    import subprocess
-    command = ['sadic', input, "--output", output_path]
-    if risoluzione:
-        command.extend(['--risoluzione', str(risoluzione)])
-    if probe_radius:
-        command.extend(['--probe_radius', str(probe_radius)])
-    subprocess.run(command)
+    result = sadic(input, resolution=risoluzione, probe_radius=probe_radius)
+    result.save_pdb(output_path)
 
 def cleanup_old_files(directory, days_old):
     now = time.time()
@@ -65,6 +65,18 @@ def upload_pdb(request):
             # Ottieni i valori di risoluzione e probe_radius
             risoluzione = form.cleaned_data.get('risoluzione')
             probe_radius = form.cleaned_data.get('probe_radius')
+
+            if risoluzione is not None:
+                if risoluzione < RANGE_RISOLUZIONE[0]:
+                    risoluzione = RANGE_RISOLUZIONE[0]
+                elif risoluzione > RANGE_RISOLUZIONE[1]:
+                    risoluzione = RANGE_RISOLUZIONE[1]
+
+            if probe_radius is not None:
+                if probe_radius < RANGE_PROBE_RADIUS[0]:
+                    probe_radius = RANGE_PROBE_RADIUS[0]
+                elif probe_radius > RANGE_PROBE_RADIUS[1]:
+                    probe_radius = RANGE_PROBE_RADIUS[1]
 
             # Elabora il file
             process_pdb(input_arg, output_path, risoluzione, probe_radius)

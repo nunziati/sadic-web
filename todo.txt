@@ -6,5 +6,4 @@
 - Qualche miglioramento grafico (Immagini, riquadrino intorno al form, allineare gli elementi del form)
 - Loghi unisi, unifi, diism, dipartimento di neri, structural biology lab
 - Altra tipologia di input: file testuale con lista codici pdb
-- Possibilità di settare alcuni parametri di sadic (risoluzione, probe_radius) (con controlli su valori ammissibili)
 - Progress bar per progresso dell'elaborazione
