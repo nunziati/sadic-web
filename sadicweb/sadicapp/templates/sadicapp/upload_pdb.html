@@ -14,21 +14,42 @@
             margin-bottom: 20px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
-
+        .info-row {
+            display: flex;
+            align-items: center;
+        }
+        .text-section {
+            flex: 1;
+        }
+        .image-section img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
-    <div class="info-box">
-        <h2>Informazioni sul Software</h2>
-        <p>{{ descrizione_software }}</p>
+    <div class="container mt-5">
+        <div class="row info-row">
+            <div class="col-md-8 text-section">
+                <div class="info-box">
+                    <h2>Informazioni sul Software</h2>
+                    <p>{{ descrizione_software }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 image-section">
+                {% load static %}
+                <img src="{% static 'images/1GWD.png' %}" alt="Descrizione immagine" class="img-fluid">
+                <!-- <img src="https://via.placeholder.com/300" alt="Descrizione Immagine"> -->
+            </div>
+        </div>
+
+        <h1>Upload PDB File</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Process</button>
+        </form>
     </div>
-<div class="container mt-5">
-    <h1>Upload PDB File</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Process</button>
-    </form>
-</div>
 </body>
 </html>
