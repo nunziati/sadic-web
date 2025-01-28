@@ -24,10 +24,10 @@
     </div>
 <div class="container mt-5">
     <h1>Upload PDB File</h1>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Process</button>
+        <button type="submit" class="btn btn-primary">Upload</button>
     </form>
 </div>
 </body>
