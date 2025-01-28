@@ -45,3 +45,16 @@ def upload_pdb(request):
     else:
         form = PDBInputForm()
     return render(request, 'sadicapp/upload_pdb.html', {'form': form})
+
+
+
+def home(request):
+    titolo = "SADIC v2: A Modern Implementation of the Simple Atom Depth Index Calculator"
+    descrizione = """ SADIC v2 is an advanced tool for calculating the depth index of atoms in protein molecules.  
+                    This web application allows users to either directly input the PDB code of a protein or upload a **PDB file**.  
+                    The computed atom depth indices are stored in the B-factor field of the resulting modified PDB file.  
+                    This solution provides a fast and efficient approach for assessing atomic depth, enabling accurate structural analyses of proteins.
+                """
+    return render(request, 'home.html', {'titolo_software': titolo, 'descrizione_software': descrizione})
+
+
