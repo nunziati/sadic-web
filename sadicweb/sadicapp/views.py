@@ -93,7 +93,28 @@ def upload_pdb(request):
     descrizione = """ SADIC v2 is an advanced tool for calculating the depth index of atoms in protein molecules.  
                     This web application allows users to either directly input the PDB code of a protein or upload a PDB file.  
                     The computed atom depth indices are stored in the B-factor field of the resulting modified PDB file.  
-                    This solution provides a fast and efficient approach for assessing atomic depth, enabling accurate structural analyses of proteins.
+                    This solution provides a fast and efficient approach for:
+                    - Assessing atomic depth for structural insights
+                    - Understand protein stability and molecular interactions.
                 """
     
     return render(request, 'sadicapp/upload_pdb.html', {'form': form, 'titolo_software': titolo, 'descrizione_software': descrizione})
+
+
+# Si può aggiungere un bottone con queste info:
+"""  
+Personalizzazione avanzata  
+
+SADIC v2 permette agli utenti di configurare due parametri fondamentali per l'analisi delle strutture proteiche:  
+
+- **Raggio della sfera di riferimento:**  
+   Questo parametro definisce la dimensione della sfera utilizzata per misurare la profondità degli atomi rispetto alla struttura proteica.  
+   Se il raggio è troppo piccolo, l'analisi potrebbe perdere dettagli importanti; se è troppo grande, i risultati potrebbero essere meno precisi per i piccoli dettagli locali.  
+
+- **Risoluzione della griglia:**  
+   La risoluzione controlla la granularità della rappresentazione discreta della proteina.  
+   Una risoluzione più alta (valore numerico più basso) garantisce una maggiore accuratezza, ma comporta tempi di calcolo più lunghi.  
+   Una risoluzione più bassa accelera l'elaborazione ed è utile per analisi rapide su strutture più grandi.  
+
+Queste opzioni consentono agli utenti di bilanciare precisione ed efficienza, adattando l'analisi alle specifiche esigenze del progetto.
+"""
