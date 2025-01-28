@@ -1,0 +1,10 @@
+- Fare in modo che si possa scegliere se mettere un codice pdb o il file pdb come input
+- Mettere una descrizione con regole per usare l'app
+- Mettere le reference
+- Un po' di documentazione
+- Log degli update
+- Qualche miglioramento grafico (Immagini, riquadrino intorno al form, allineare gli elementi del form)
+- Loghi unis, unifi, diism, dipartimento di neri, structural biology lab
+- Altra tipologia di input: file testuale con lista codici pdb
+- Possibilità di settare alcuni parametri di sadic (risoluzione, probe_radius) (con controlli su valori ammissibili)
+- Progress bar per progresso dell'elaborazione
