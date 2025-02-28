@@ -1,0 +1,332 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDB</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery per AJAX -->
+    <style>
+        /* Stile per la navbar */
+        .navbar {
+            background-color: #343a40;
+            padding: 10px;
+        }
+        .navbar-brand img {
+            height: 65px;
+            margin-right: 10px;
+        }
+        .navbar-brand span {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .img-fluid {
+            max-width: 125%;
+            height: auto;
+        }
+        
+        /* Stile per il contenitore principale */
+        .container-content {
+            max-width: 160vh;
+            margin: auto;
+        }
+        /* Stile per il box di elaborazione */
+        .upload-box {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        /* Stile per la riga degli input */
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .form-group {
+            flex: 1;
+            text-align: left;
+        }
+        .form-control {
+            width: 100%;
+        }
+        /* Stile per la progress bar */
+        #progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .progress {
+            height: 30px;
+            font-size: 18px;
+        }
+        /* Nasconde i parametri avanzati */
+        #parameters-container {
+            display: none;
+        }
+        /* Allinea la checkbox con il testo */
+        .custom-checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        /* Stile per il footer */
+        .footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 40px;
+        }
+        /* stile delle references */
+        .references {
+            background-color: #f8f9fa;
+            padding: 2vh;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            width: 100%;
+            margin-top: 50px;
+        }
+        .references h5 {
+            margin-bottom: 10px;
+        }
+        .references ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .references li {
+            margin-bottom: 10px;
+        }
+        .references a {
+            font-weight: bold;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .references a:hover {
+            text-decoration: underline;
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Navbar con logo e titolo -->
+    <nav class="navbar navbar-dark">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- Logo e titolo a sinistra -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <!-- <img src="{% static 'sadicapp/images/logo.png' %}" alt="Logo" style="height: 65px; margin-right: 10px;"> -->
+                <span>SADICv2 Web - Simple Atom Depth Index Calculator</span>
+            </a>
+            
+            <!-- Loghi a destra -->
+            <div class="d-flex align-items-center">
+                <img src="{% static 'sadicapp/images/unisi.png' %}" alt="Logo1" style="height: 50px; margin-left: 15px;">
+                <img src="{% static 'sadicapp/images/unifi.png' %}" alt="Logo2" style="height: 50px; margin-left: 15px;">
+                <img src="{% static 'sadicapp/images/diism.png' %}" alt="Logo3" style="height: 50px; margin-left: 15px;">
+                <img src="{% static 'sadicapp/images/sbl.png' %}" alt="Logo4" style="height: 50px; margin-left: 15px;">
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Contenuto principale -->
+    <div class="container container-content mt-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="info-box">
+                    <h2>Software Info</h2>
+                    <p>{{ descrizione_software }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="{% static 'sadicapp/images/1GWD.png' %}" alt="Descrizione immagine" class="img-fluid">
+            </div>
+        </div>
+        <div class="container container-content mt-5">
+            <div class="row">
+                <!-- Colonna principale con il form -->
+                <div class="col-md-8">
+                    <div class="upload-box mt-5">
+                        <h2>Sadic Promt</h2>
+                        <form id="upload-form" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+        
+                            <!-- Upload file -->
+                            <div class="form-group mt-3">
+                                <label for="id_pdb_file">Upload PDB File:</label>
+                                <input type="file" name="pdb_file" id="id_pdb_file" class="form-control">
+                            </div>
+        
+                            <!-- Oppure inserisci il codice PDB -->
+                            <div class="form-group mt-3">
+                                <label for="id_pdb_code">or Enter PDB Code:</label>
+                                <input type="text" name="pdb_code" id="id_pdb_code" class="form-control" placeholder="e.g. 1ABC">
+                            </div>
+        
+                            <!-- Checkbox per parametri avanzati -->
+                            <div class="custom-checkbox-container">
+                                <input class="form-check-input" type="checkbox" id="custom-params">
+                                <label class="form-check-label" for="custom-params">Customize Parameters</label>
+                            </div>
+        
+                            <!-- Resolution e Probe Radius affiancati -->
+                            <div id="parameters-container" class="mt-3">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="id_risoluzione">Resolution:</label>
+                                        <input type="number" name="risoluzione" id="id_risoluzione" class="form-control" step="0.01" min="0.1" max="3.0">
+                                        <small class="text-muted">Min: 0,1 | Max: 2,0</small>
+                                    </div>
+        
+                                    <div class="form-group">
+                                        <label for="id_probe_radius">Probe Radius:</label>
+                                        <input type="number" name="probe_radius" id="id_probe_radius" class="form-control" step="0.01" min="1.0" max="100.0">
+                                        <small class="text-muted">Min: 1 | Max: 100</small>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <button type="submit" id="process-btn" class="btn btn-primary mt-3">Process</button>
+                        </form>
+        
+                        <!-- Contenitore della progress bar -->
+                        <div id="progress-container" class="text-center">
+                            <h3>Processing...</h3>
+                            <div class="progress">
+                                <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;">0%</div>
+                            </div>
+                        </div>
+        
+                        <!-- Messaggio di completamento -->
+                        <div id="completion-message" class="text-center">
+                            <h3 class="text-success">Processing Complete! Your file is ready for download.</h3>
+                            <a id="download-link" href="#" class="btn btn-success">Download Processed File</a>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Colonna per le reference -->
+                <div class="col-md-4">
+                    <div class="references">
+                        <h5>References:</h5>
+                        <ul>
+                            <li>
+                                <a href="https://link.springer.com/chapter/10.1007/978-3-031-57793-2_34" target="_blank">
+                                    A discrete geometry method for atom depth computation in complex molecular systems
+                                </a><br>
+                                <small style="font-weight: 600;">S. Marziali, G. Nunziati, A.L. Prete, N. Niccolai, S. Brunetti, M. Bianchini</small>
+                                <small>International Conference on Discrete Geometry and Mathematical Morphology, 2024</small>
+                            </li>
+                            <li>
+                                <a href="https://www.sciencedirect.com/science/article/pii/S2352711024001742" target="_blank">
+                                    SADIC v2: A modern implementation of the Simple Atom Depth Index Calculator
+                                </a><br>
+                                <small style="font-weight: 600;">S. Marziali, G. Nunziati, A.L. Prete, N. Niccolai, M. Bianchini</small>
+                                <small>SoftwareX 27, 101803, 2024</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>SADICv2 Web | Version 1.0 | GitHub Page</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            $("#progress-container").hide();
+            $("#completion-message").hide();
+            $("#parameters-container").hide();
+
+            // Mostra/nasconde i parametri avanzati quando si attiva la checkbox
+            $("#custom-params").change(function() {
+                if ($(this).is(":checked")) {
+                    $("#parameters-container").slideDown();
+                } else {
+                    $("#parameters-container").slideUp();
+                }
+            });
+
+            // Disabilita un input quando l'altro è compilato
+            $("#id_pdb_file").change(function() {
+                if ($(this).val()) {
+                    $("#id_pdb_code").prop("disabled", true).val('');
+                } else {
+                    $("#id_pdb_code").prop("disabled", false);
+                }
+            });
+
+            $("#id_pdb_code").on("input", function() {
+                if ($(this).val().trim()) {
+                    $("#id_pdb_file").prop("disabled", true).val('');
+                } else {
+                    $("#id_pdb_file").prop("disabled", false);
+                }
+            });
+
+            // Gestisce la sottomissione del form tramite AJAX
+            $("#upload-form").submit(function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+
+                $("#process-btn").hide();
+                $("#progress-container").show();
+                $("#completion-message").hide();
+                $("#custom-params").prop("disabled", true);
+                $("#id_risoluzione").prop("disabled", true);
+                $("#id_probe_radius").prop("disabled", true);                
+
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        checkProgress(response.task_id, response.download_url);
+                    }
+                });
+            });
+
+            function checkProgress(task_id, download_url) {
+                $.get("/progress/?task_id=" + task_id, function(data) {
+                    if (data.progress !== undefined) {
+                        $("#progress-bar").css("width", data.progress + "%").text(data.progress + "%");
+
+                        if (data.progress < 100) {
+                            setTimeout(() => checkProgress(task_id, download_url), 2000);
+                        } else {
+                            $("#progress-container").hide();
+                            $("#completion-message").show();
+                            $("#download-link").attr("href", download_url);
+                        }
+                    } else {
+                        console.error("Unexpected response format:", data);
+                        showError("Unexpected response from the server.");
+                    }
+                }).fail(function(jqXHR) {
+                    console.error("Error fetching progress:", jqXHR.responseText);
+                    showError(jqXHR.responseJSON?.error || "Processing failed. Please try again.");
+                });
+            }
+            function showError(message) {
+                $("#progress-container").hide();
+                $("#completion-message").hide();
+                $("#process-btn").show();  // Riattiva il pulsante per riprovare
+                alert(message); // Oppure puoi usare un div per mostrare il messaggio
+            }
+        });
+    </script>
+</body>
+</html>

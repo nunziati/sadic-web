@@ -1,9 +1,28 @@
+ errori rilevati:
+- il file 108d ha una key P che manda sadic in errore, ho aggiunto un error handler
+
+bugfixes:
+modificati in float gli input utente nel file views.py
+
+features aggiunte:
+- refactoring completo dell'app e dei path per aumentare la leggibilità
+- tutto è stato migrato sotto docker
+- sostituito il db locale con mariadb esterno
+- aggiunti strumenti di analisi db phpmyadmin
+- l'app viene ora esposta tramite nginx via gunicorn (production ready), certificati etc
+- Progress bar per progresso dell'elaborazione
+- aggiunti worker gunicorn per elaborazioni parallele dei file
+- Aggiunte le reference
+- Sistemata la grafica
+- Aggiunti loghi
+
+todo:
 - Fare in modo che si possa scegliere se mettere un codice pdb o il file pdb come input
 - Mettere una descrizione con regole per usare l'app
-- Mettere le reference
 - Un po' di documentazione
 - Log degli update
-- Qualche miglioramento grafico (Immagini, riquadrino intorno al form, allineare gli elementi del form)
-- Loghi unisi, unifi, diism, dipartimento di neri, structural biology lab
+- Logo dipartimento di neri (chi è?)
 - Altra tipologia di input: file testuale con lista codici pdb
-- Progress bar per progresso dell'elaborazione
+
+
+
