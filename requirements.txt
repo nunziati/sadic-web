@@ -1,0 +1,12 @@
+Django>=4.2,<5.0
+gunicorn
+#psycopg2-binary  # Se usi PostgreSQL, rimuovi se usi SQLite
+dj-database-url  # Per gestire il database tramite variabili d'ambiente
+whitenoise  # Per servire file statici in produzione
+django-environ  # Per gestire variabili d'ambiente
+requests==2.31.0
+crispy-bootstrap4
+environ
+sadic
+mysqlclient==2.1.1
+channels
