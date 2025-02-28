@@ -1,28 +1,21 @@
- errori rilevati:
-- il file 108d ha una key P che manda sadic in errore, ho aggiunto un error handler
+Added Features:
+	•	Complete refactoring of the app to improve readability
+	•	Fully migrated to Docker
+	•	Replaced the local database with an external MariaDB instance
+	•	Added database analysis tools (phpMyAdmin)
+	•	The app is now exposed via Nginx through Gunicorn (production ready), including certificates, etc.
+	•	Progress bar for process tracking
+	•	Added Gunicorn workers for parallel file processing
+	•	Added references
+	•	Improved UI and layout
+	•	Added logos
+	•	Option to choose between entering a PDB code or uploading a PDB file as input
+	•	Error handling if SADIC encounters issues processing the PDB file
 
-bugfixes:
-modificati in float gli input utente nel file views.py
-
-features aggiunte:
-- refactoring completo dell'app e dei path per aumentare la leggibilità
-- tutto è stato migrato sotto docker
-- sostituito il db locale con mariadb esterno
-- aggiunti strumenti di analisi db phpmyadmin
-- l'app viene ora esposta tramite nginx via gunicorn (production ready), certificati etc
-- Progress bar per progresso dell'elaborazione
-- aggiunti worker gunicorn per elaborazioni parallele dei file
-- Aggiunte le reference
-- Sistemata la grafica
-- Aggiunti loghi
-
-todo:
-- Fare in modo che si possa scegliere se mettere un codice pdb o il file pdb come input
-- Mettere una descrizione con regole per usare l'app
-- Un po' di documentazione
-- Log degli update
-- Logo dipartimento di neri (chi è?)
-- Altra tipologia di input: file testuale con lista codici pdb
-
-
+To-Do:
+	•	Add a description with usage guidelines for the app
+	•	Some documentation
+	•	Log of updates
+	•	Add the department logo for “Neri”
+	•	Additional input type: text file containing a list of PDB codes
 
