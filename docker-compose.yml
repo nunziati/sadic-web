@@ -18,6 +18,7 @@ services:
       - ./sadicweb/static:/opt/static_root
     depends_on:
       - sadicweb
+    restart: always
 
   sadicweb:
     build:
@@ -42,7 +43,7 @@ services:
       - "8000:8000"
     depends_on:
       - mariadb
-    
+    restart: always
 
   mariadb:
     privileged: true
@@ -55,6 +56,7 @@ services:
       MYSQL_PASSWORD: nomoresecret
     volumes:
       - mariadb_data:/var/lib/mysql
+    restart: always
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -68,6 +70,7 @@ services:
     restart: always
     ports:
       - 8081:80
-
+    restart: always 
+    
 volumes:
   mariadb_data:      
