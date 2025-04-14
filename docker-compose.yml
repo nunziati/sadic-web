@@ -10,7 +10,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      SERVER_NAME: "sadicweb.blabla.com"
+      SERVER_NAME: "sadic.unisi.it"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/server.crt:/etc/nginx/ssl/server.crt
@@ -27,7 +27,7 @@ services:
     container_name: sadicweb
     privileged: true
     environment:
-      DEBUG: "True"
+      DEBUG: "False"
       DJANGO_SUPERUSER_USERNAME: "superuser"
       DJANGO_SUPERUSER_EMAIL: "mail@mail.example"
       DJANGO_SUPERUSER_PASSWORD: "password"
@@ -67,10 +67,9 @@ services:
       PMA_HOST: mariadb
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
-    restart: always
     ports:
       - 8081:80
-    restart: always 
-    
+    restart: always
+
 volumes:
   mariadb_data:      

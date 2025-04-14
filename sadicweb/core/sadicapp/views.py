@@ -2,6 +2,7 @@ import os
 import time
 import threading
 import uuid
+import textwrap
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -133,13 +134,16 @@ def upload_pdb(request):
     else:
         form = PDBInputForm()
 
-    titolo = "SADIC v2: A Modern Implementation of the Simple Atom Depth Index Calculator"
-    descrizione = """ SADIC v2 is an advanced tool for calculating the depth index of atoms in protein molecules.  
-                    This web application allows users to either directly input the PDB code of a protein or upload a PDB file.  
-                    The computed atom depth indices are stored in the B-factor field of the resulting modified PDB file.  
-                    This solution provides a fast and efficient approach for:
-                    - Assessing atomic depth for structural insights
-                    - Understand protein stability and molecular interactions.
-                """
-    
+
+    titolo = "SADICv2 Web: Simple Atom Depth Index Calculator"
+    descrizione = textwrap.dedent("""\
+        SADIC v2 is an advanced tool for calculating the depth index of atoms in protein molecules.  
+        This web application allows users to either directly input the PDB code of a protein or upload a PDB file.  
+        The computed atom depth indices are stored in the B-factor field of the resulting modified PDB file.  
+
+        This solution provides a fast and efficient approach for:
+        - 🔬 Assessing atomic depth for structural insights
+        - 🧬 Understanding protein stability and molecular interactions.
+    """)
+
     return render(request, 'sadicapp/upload_pdb.html', {'form': form, 'titolo_software': titolo, 'descrizione_software': descrizione})
